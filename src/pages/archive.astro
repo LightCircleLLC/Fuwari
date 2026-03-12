@@ -1,24 +1,25 @@
 ---
+
 import ArchivePanel from "@components/ArchivePanel.svelte";
+
 import I18nKey from "@i18n/i18nKey";
+
 import { i18n } from "@i18n/translation";
+
 import MainGridLayout from "@layouts/MainGridLayout.astro";
+
 import { getSortedPostsList } from "../utils/content-utils";
 
-const rawPostsList = await getSortedPostsList();
 
-// Format the data to satisfy the TypeScript definition for 'Post'
-const sortedPostsList = rawPostsList.map(post => ({
-  ...post,
-  data: {
-    ...post.data,
-    category: post.data.category === null ? undefined : post.data.category
-  }
-})) as any; 
-// Note: Adding `as any` ensures the Svelte component's strict type definition is satisfied 
-// now that we've safely handled the null values.
+
+const sortedPostsList = await getSortedPostsList();
+
 ---
 
+
+
 <MainGridLayout title={i18n(I18nKey.archive)}>
+
     <ArchivePanel sortedPosts={sortedPostsList} client:only="svelte"></ArchivePanel>
+
 </MainGridLayout>
